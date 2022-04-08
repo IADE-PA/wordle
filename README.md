@@ -13,7 +13,7 @@ No jogo, o objetivo é adivinhar uma palavra alvo com 5 letras. Existem 6 tentat
 - [x] Definir instruções do programa;
 - [x] Obter listagem de palavras para um ficheiro `.txt`;
 - [x] Ler as palavras para um array;
-- [ ] Escolher uma palavra alvo, aleatoriamente;
+- [x] Escolher uma palavra alvo, aleatoriamente;
 - [ ] Ler tentativas do utilizador
   - [ ] Verificar se palavra existe na listagem;
   - [ ] verificar correção de cada letra face à palavra alvo;

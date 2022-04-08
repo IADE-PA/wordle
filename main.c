@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define _POSIX_C_SOURCE 200809L
 
@@ -37,15 +38,19 @@ void free_words(char** words, const int num_words) {
     free(words);
 }
 
+char* get_random_word(char** words, const int num_words) {
+    int idx = rand() % num_words;
+    return words[idx];
+}
+
 int main() {
+    srand(time(NULL));
     char filename[] = "words.txt";
 
     int num_words = 0;
     char** words = read_words(filename, &num_words);
 
-    for (int i = 0; i < num_words; i++) {
-        printf("%s\n", words[i]);
-    }
+    char* target = get_random_word(words, num_words);
 
     free_words(words, num_words);
     return 0;
