@@ -37,7 +37,12 @@ No jogo, o objetivo é adivinhar uma palavra alvo com 5 letras. Existem 6 tentat
 
 E.g.:
 
-4 ..bdE
+4 __bdE
+
+- inicia com o número de tentativas atuais
+- `_` significa que a letra não existe na palavra;
+- minuscula significa que a letra existe na palavra, mas está na posição errada;
+- maiuscula significa que a letra está na posição correta.
 
 1. Indicar `Palavra inválida.` se a tentativa não corresponder a uma palavra do dicionário, ou não tiver 5 letras.
 2. No caso de sucesso, indicar `Ganhou!`
