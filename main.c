@@ -59,7 +59,7 @@ void score_attempt(char* attempt, char* target, char* result) {
     // char* result = malloc(sizeof(char) * 6);
     for (int i = 0; i < 5; i++) {
         result[i] = '_';
-    }
+    }\
     result[5] = '\0';
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
