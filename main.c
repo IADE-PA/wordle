@@ -54,7 +54,9 @@ bool word_in_words(char* attempt, char** words, int num_words) {
     return false;
 }
 
-void score_attempt(char* attempt, char* target, char* result) {
+bool score_attempt(char* attempt, char* target, char* result) {
+
+    int numOfRightChars = 0;
     // char result[] = "_____"; // não pode ser retornado
     // char* result = malloc(sizeof(char) * 6);
     for (int i = 0; i < 5; i++) {
@@ -62,20 +64,25 @@ void score_attempt(char* attempt, char* target, char* result) {
     }
     result[5] = '\0';
     for (int i = 0; i < 5; i++) {
+        if(attempt[i] == target[i]){
+            result[i] = attempt[i] < 'a' ? attempt[i] : attempt[i] - ('a' - 'A');
+            numOfRightChars++;
+            continue;
+        }
+
         for (int j = 0; j < 5; j++) {
-            // TODO: falta comparar no mesmo case
             if (attempt[i] == target[j]) {
-                if (i == j) {
-                    // Indicar com maiúscula que a letra está na posição correta
-                    result[i] = attempt[i] < 'a' ? attempt[i] : attempt[i] - ('a' - 'A');
-                } else {
-                    // Indicar com minúscula que a letra existe, mas não está na posição correta
-                    result[i] = attempt[i] < 'a' ? attempt[i] + ('a' - 'A') : attempt[i];
-                }
+                result[i] = attempt[i] < 'a' ? attempt[i] + ('a' - 'A') : attempt[i];
                 break;
             }
         }
     }
+
+    if(numOfRightChars == 5) {
+        return true;
+    }
+
+    return false;
 }
 
 int main() {
@@ -87,6 +94,8 @@ int main() {
 
     char* target = get_random_word(words, num_words);
 
+    printf("\n\n%s\n\n", target);
+
     char* attempt = NULL;
     size_t num_chars = 0;
     int num_attempts = 0;
@@ -94,18 +103,36 @@ int main() {
         getline(&attempt, &num_chars, stdin);
         attempt[strlen(attempt) - 1] = '\0';
         if (strlen(attempt) != 5) {
-            printf("Tentativa inválida.");
-        } else if (!word_in_words(attempt, words, num_words)) {
-            printf("Tentativa inválida.");
+            printf("Tentativa inválida.\n");
+        }
+        
+        for(int i = 0; i < 5; i++){
+            if(attempt[i] < 'a') {
+                attempt[i] = attempt[i] + ('a' - 'A');
+            }
+        }
+
+        if (!word_in_words(attempt, words, num_words)) {
+            printf("Tentativa inválida.\n");
         } else {
             char* attempt_score = malloc(sizeof(char) * 6);
-            score_attempt(attempt, target, attempt_score);
+
+            if(score_attempt(attempt, target, attempt_score)){
+                printf("Ganhou!\n");
+                break;
+            }
+
             printf("%s\n", attempt_score);
             free(attempt_score);
             num_attempts++;
         }
         attempt = NULL;
     }
+
+    if(num_attempts > 5) {
+        printf("Perdeu!\n");
+    }
+
     free(attempt);
 
     free_words(words, num_words);
